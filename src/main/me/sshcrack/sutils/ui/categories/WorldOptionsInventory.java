@@ -24,11 +24,11 @@ import java.util.function.Supplier;
 
 public class WorldOptionsInventory implements InventoryProvider {
     public static SmartInventory INVENTORY = SmartInventory.builder()
-            .id("timer-util-options")
+            .id("world-util-options")
             .provider(new WorldOptionsInventory())
             .manager(Main.plugin.invManager)
             .size(3, 9)
-            .title(ChatColor.GOLD + "Options")
+            .title(MessageManager.getMessage("settings.titles.world_options"))
             .build();
 
     @Override

@@ -20,6 +20,7 @@ public class TestCommand extends SubCommand {
         if (!(sender instanceof Player))
             return new CommandResponse("onlyplayer");
 
+        sender.sendMessage(Gradient.getGradient(Color.decode(args[0]), Color.decode(args[1]), "Gradient example"));
         return new CommandResponse("gradient");
     }
 

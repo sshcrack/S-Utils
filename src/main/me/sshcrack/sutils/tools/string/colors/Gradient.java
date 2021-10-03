@@ -12,14 +12,14 @@ public class Gradient {
 
         Double[] startRGB = new Double[] {
                 (double) start.getRed(),
-                (double) start.getBlue(),
                 (double) start.getGreen(),
+                (double) start.getBlue(),
         };
 
         Double[] endRGB = new Double[] {
                 (double) end.getRed(),
-                (double) end.getBlue(),
                 (double) end.getGreen(),
+                (double) end.getBlue(),
         };
 
         double curr = 0;
