@@ -1,0 +1,13 @@
+name: Utils
+version: 1.0.0 - DEV
+author: sshcrack
+description: Challenge Plugin written by sshcrack (hi if you are reading this :)
+main: me.sshcrack.sutils.Main
+api-version: 1.13
+permissions:
+  utils.standard:
+    description: Standard perms
+    default: true
+  utils.manage:
+    description: Manage things
+    default: op

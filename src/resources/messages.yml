@@ -1,0 +1,97 @@
+gradient: "<GRA#e31010,#e31010>Test</GRA>"
+
+utils:
+  reload: '&2Config reloaded!'
+  reset: '&4&lResetting world...'
+  settings: '&3Settings opened!'
+  timer:
+    resumed: '&7Timer has been &2resumed.'
+    paused: '&7Timer has been &6paused.'
+
+challenges:
+  ultra_hardcore:
+    name: 'Ultra Hardcore'
+    description:
+      - "&cNo natural heart generation"
+      - "&6Just effects"
+
+settings:
+  titles:
+    main: "<GRA#eb9c34,#ebdf34>Settings</GRA>"
+    challenges: "&6Challenges"
+    timer: "&6Timer"
+
+  timer:
+    reset: '&6Reset'
+    pause: '&cPause'
+    resume: '&2Resume'
+
+  options:
+    reset_world: '&4&lReset world'
+    seed_reset: '&6Seed Reset'
+    villager_spawn: '&2Villagerspawn'
+
+  items:
+    back: "&eBack"
+    next: "&6Next"
+    previous: "&6Previous"
+    timer:
+      name: "&6Timer"
+      description: "&7Pause, Resume or pause the timer"
+
+    challenges:
+      name: '&6Challenges'
+      description: '&7Manage challenges'
+
+    world_options:
+      name: "&6World Options"
+      description: "&7Reset world, toggle villager spawn"
+
+  name:
+    enable: '&3%s'
+    disable: '&3%s'
+
+  description:
+    enabled: "&2&lEnabled"
+    disabled: "&c&lDisabled"
+
+timer:
+  units:
+    dateFormat: '%s days %s:%s:%s'
+    hourFormat: '%s:%s:%s'
+    minuteFormat: '%s:%s'
+  state:
+    paused: '&6Timer paused.'
+
+title:
+  enabled: '&3%s &7is now &2&lenabled!'
+  disabled: '&3%s &7is now &c&ldisabled!'
+
+events:
+  join: "&7Player &9%s&r &2joined &7the server."
+
+reset:
+  seed_reset: "&6Performing seed reset..."
+  kick:
+    bars: "&9&k!&r&9-------------------------------&r&9&k!"
+    append:
+      start: "&9&k!&r"
+      end: "&9&k!&r"
+    msg:
+      lines:
+        - "Resetting world.."
+        - "."
+        - "Requested by INSERTPLAYERNAME"
+      colors:
+        - color: "<HEX#04CADF>"
+          before: "Resetting"
+          line: 0
+        - color: "&0"
+          before: "."
+          line: 1
+        - color: "&7"
+          before: "Requested"
+          line: 2
+        - color: "<HEX#B8FAFE>"
+          after: "by "
+          line: 2
