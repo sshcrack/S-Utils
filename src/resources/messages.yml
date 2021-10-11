@@ -1,17 +1,63 @@
+noPerm: "<GRA#aa004e,#ff0000>You don't have permissions to do this.</GRA>"
+
 utils:
   reload: '&2Config reloaded!'
   reset: '&4&lResetting world...'
   settings: '&3Settings opened!'
+  position:
+    name_needed: "&cYou have to give a name to delete"
+    reset: "&4&lPositons have been reset."
+    list: "&8Available Positions: &a%s"
+    delimiter: "&8,&a"
+    invalid: "&cInvalid messaage given. &6Your message may only contain letters, numbers and no spaces."
+    create: "&6Position &9%s&r&6 was created by &9%s (%s,%s,%s)!"
+    get: "&6Positon &9%s &6(%s,%s,%s)"
+    cant_remove: "&cCould not remove point %s"
+    removed: "&aRemoved positon &9%s&6!"
+    invoke: "&cYou have to invoke a position first."
+    not_existent: "&cThe last potion you invoked does not exist anymore"
+    compass: "&2A compass for positon %s has been given to you."
+    unknown_error: "&6Could not &4&ladd&r&6 position because of an &4&lunknown error"
   timer:
     resumed: '&7Timer has been &2resumed.'
     paused: '&7Timer has been &6paused.'
 
 challenges:
+  chunk_effect:
+    name: "Chunk Effect"
+    description:
+      - "&2Get random potion effects"
+      - "&2every chunk you enter"
+  chunk_destroy:
+    name: "Chunk Destroy"
+    description:
+      - "&cDestroys top blocks of current chunk every second"
+  border_item:
+    name: "Border Item"
+    increased:
+      title: "&a+3 Blocks"
+      substring: "Border increased!"
+      msg: "&8Item &9%s &8was registered by &7player &9%s."
+    description:
+      - "&aBorder increases on pickup of every unique item"
+  hurt_spawn:
+    name: 'Hurt Spawn'
+    spawn: "&3%s&7: &4&l%s&r &aspawned."
+    description:
+      - "&cA mob spawns, when you get damage"
   ultra_hardcore:
     name: 'Ultra Hardcore'
     description:
       - "&cNo natural heart generation"
       - "&6Just effects"
+  damage_redirect:
+    name: 'Damage Redirect'
+    description:
+      - "&cRedirects damage to another player"
+      - ""
+      - "&8Example:"
+      - "&8Player A is falling of a cliff,"
+      - "&8but Player B would get the damage"
 
 settings:
   titles:
@@ -19,13 +65,14 @@ settings:
     challenges: "<GRA#ff512f,#dd2476>Challenges</GRA>"
     timer: "<GRA#159957,#155799>Timer</GRA>"
     world_options: "<GRA#386f1e,#95c758>World</GRA>"
+    options: "<GRA#ef32d9,#1afffb>Options</GRA>"
 
   timer:
     reset: '&6Reset'
     pause: '&cPause'
     resume: '&2Resume'
 
-  options:
+  world_options:
     reset_world: '&4&lReset world'
     seed_reset: '&6Seed Reset'
     villager_spawn: '&2Villagerspawn'
@@ -46,9 +93,17 @@ settings:
       name: "&6World Options"
       description: "&7Reset world, toggle villager spawn"
 
+    options:
+      name: "&6Options"
+      description: "&7Miscellaneous options like DamageLogger"
+
   name:
     enable: '&3%s'
     disable: '&3%s'
+
+  toggle_titles:
+    enabled: "&6%s &2&l enabled!"
+    disabled: "&6%s &c&l disabled!"
 
   description:
     enabled: "&2&lEnabled"
@@ -68,6 +123,7 @@ title:
 
 events:
   join: "&7Player &9%s&r &2joined &7the server."
+  leave: "&7Player &9%s&r &cleft &7the server."
 
 reset:
   seed_reset: "&6Performing seed reset..."
@@ -94,3 +150,45 @@ reset:
         - color: "<HEX#B8FAFE>"
           after: "by "
           line: 2
+
+toggleable:
+  damage_logger:
+    name: "&6Damage-Logger"
+    description: "&2Logs every damage a player gets"
+  speedrun:
+    name: "&6Speedrun"
+    description: "&4&lResets&r &6 the world if a player dies"
+    died:
+      title: "&4Player died died"
+      description: "&cResetting world..."
+
+causes:
+  format: "&7Player&9 %s took damage because of &6&l %s&9&l and lost %s&r &7HP."
+  BLOCK_EXPLOSION : "an block explosion"
+  CONTACT : "a block contact"
+  CRAMMING : "cramming"
+  CUSTOM : "unknown"
+  DRAGON_BREATH : "the Dragons breath"
+  DROWNING : "drowning"
+  DRYOUT : "dryout"
+  ENTITY_ATTACK : "a entity attack"
+  ENTITY_EXPLOSION : "an explosion"
+  ENTITY_SWEEP_ATTACK : "an sweep attack"
+  FALL : "fall damage"
+  FALLING_BLOCK : "a falling block"
+  FIRE : "fire"
+  FIRE_TICK : "fire"
+  FLY_INTO_WALL : "a wall"
+  HOT_FLOOR : "a magma block"
+  LAVA : "lava"
+  LIGHTNING : "a lightning"
+  MAGIC : "magic"
+  MELTING : "metling"
+  POISON : "poison"
+  PROJECTILE : "an arrow"
+  STARVATION : "starvation"
+  SUFFOCATION : "suffication"
+  SUICIDE : "/kill"
+  THORNS : "thorns"
+  VOID : "the void"
+  WITHER : "the wither"

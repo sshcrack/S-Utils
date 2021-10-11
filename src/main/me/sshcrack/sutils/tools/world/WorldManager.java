@@ -3,6 +3,8 @@ package me.sshcrack.sutils.tools.world;
 import com.google.common.util.concurrent.UncheckedTimeoutException;
 import me.sshcrack.sutils.Main;
 import me.sshcrack.sutils.message.MessageManager;
+import me.sshcrack.sutils.tools.Tools;
+import me.sshcrack.sutils.tools.location.PositionManager;
 import me.sshcrack.sutils.tools.string.StringFormatter;
 import me.sshcrack.sutils.tools.system.Directory;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
@@ -103,12 +105,11 @@ public class WorldManager {
     private static void performSeedReset(Runnable callback) {
         String resetMSG = MessageManager.getMessage("reset.seed_reset");
 
-        Audience audience = Audience.audience(Bukkit.getOnlinePlayers());
         Title title = Title.title(
                 Component.text(""),
                 Component.text(resetMSG)
         );
-        audience.showTitle(title);
+        Tools.getPlayers().showTitle(title);
 
 
         World overworld = Bukkit.getWorld(OVERWORLD);
@@ -155,15 +156,7 @@ public class WorldManager {
         UtilTimer.reset();
 
         Runnable toRun = () -> {
-            String name = issuer.getName();
-            String kickMSG = StringFormatter.getKickMSG(name);
-
-            Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-            for (Player player : players) {
-                //Using deprecated method because Component.text deletes custom colors
-                player.kickPlayer(kickMSG);
-            }
-
+            PositionManager.reset();
             Bukkit.spigot().restart();
         };
 

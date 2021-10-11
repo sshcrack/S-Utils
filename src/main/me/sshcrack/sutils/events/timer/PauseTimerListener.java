@@ -5,6 +5,7 @@ import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.timer.TimerState;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
 import net.kyori.adventure.text.Component;
+import org.apache.logging.log4j.core.impl.JdkMapAdapterStringMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Creature;
@@ -129,18 +130,8 @@ public class PauseTimerListener implements Listener {
 
     @EventHandler
     public void onDamageEvent(EntityDamageEvent damageEvent) {
-        damageEvent.setCancelled(true);
-    }
-
-
-    @EventHandler
-    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent damageEvent) {
-        damageEvent.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onEntityDamageByBlockEvent(EntityDamageByBlockEvent damageEvent) {
-        damageEvent.setCancelled(true);
+        if(damageEvent.getEntity() instanceof Player)
+            damageEvent.setCancelled(true);
     }
 
     @EventHandler
@@ -161,6 +152,13 @@ public class PauseTimerListener implements Listener {
     @EventHandler
     public void onPlayerDropEvent(PlayerDropItemEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityHurtByPlayer(EntityDamageByEntityEvent e) {
+        Entity damager = e.getDamager();
+        if(damager instanceof Player)
+            e.setCancelled(true);
     }
 
     public static void addNewPlayer(Player player) {

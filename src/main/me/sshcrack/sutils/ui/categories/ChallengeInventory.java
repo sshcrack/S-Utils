@@ -7,12 +7,11 @@ import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
 import fr.minuskube.inv.content.SlotIterator;
 import me.sshcrack.sutils.Main;
-import me.sshcrack.sutils.challenges.Challenge;
-import me.sshcrack.sutils.challenges.UltraHardcore;
+import me.sshcrack.sutils.interactable.challenges.module.Challenge;
+import me.sshcrack.sutils.interactable.challenges.module.ChallengeList;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.items.Skulls;
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -25,9 +24,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ChallengeInventory implements InventoryProvider {
-    public static final Challenge[] challenges = {
-        new UltraHardcore()
-    };
     public static SmartInventory INVENTORY = SmartInventory.builder()
             .id("challenge-util-settings")
             .provider(new ChallengeInventory())
@@ -49,20 +45,21 @@ public class ChallengeInventory implements InventoryProvider {
         ItemStack border = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         contents.fillBorders(ClickableItem.empty(border));
 
-        ClickableItem[] items = new ClickableItem[challenges.length];
+        ClickableItem[] items = new ClickableItem[ChallengeList.CHALLENGES.length];
         for(int i = 0; i < items.length; i++) {
-            Challenge challenge = challenges[i];
+            Challenge challenge = ChallengeList.CHALLENGES[i];
+            Main.plugin.getLogger().info(String.format("Loading challenge %s", challenge.toString()));
 
             Supplier<ItemStack> updateItem = () -> {
-                ItemStack item = challenge.marker.clone();
-                boolean enabled = challenge.enabled;
+                ItemStack item = challenge.getItem();
+                boolean enabled = challenge.isEnabled();
 
-                String name = challenge.name;
+                String name = challenge.getName();
                 String displayName = String.format(enabled ? nameEnable : nameDisable, name);
 
                 Component descStatus = Component.text(enabled ? descEnabled : descDisabled);
 
-                List<Component> description = challenge.description
+                List<Component> description = challenge.getDescription()
                                                 .stream()
                                                 .map(Component::text)
                                                 .collect(Collectors.toList());
@@ -89,7 +86,7 @@ public class ChallengeInventory implements InventoryProvider {
 
             ItemStack toUse = updateItem.get();
             items[i] = ClickableItem.of(toUse, (inv) -> {
-                if(challenge.enabled)
+                if(challenge.isEnabled())
                     challenge.disable();
                 else
                     challenge.enable();

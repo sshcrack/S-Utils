@@ -1,5 +1,6 @@
-package me.sshcrack.sutils.challenges;
+package me.sshcrack.sutils.interactable.challenges.base;
 
+import me.sshcrack.sutils.interactable.challenges.module.Challenge;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +13,8 @@ public class UltraHardcore extends Challenge {
     public UltraHardcore() {
         super(
                 new ItemStack(Material.GOLDEN_APPLE),
-                "ultra_hardcore"
+                "ultra_hardcore",
+                true
         );
     }
 

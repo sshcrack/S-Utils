@@ -8,6 +8,7 @@ import me.sshcrack.sutils.Main;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.items.Skulls;
 import me.sshcrack.sutils.ui.categories.ChallengeInventory;
+import me.sshcrack.sutils.ui.categories.OptionsInventory;
 import me.sshcrack.sutils.ui.categories.WorldOptionsInventory;
 import me.sshcrack.sutils.ui.categories.TimerInventory;
 import net.kyori.adventure.text.Component;
@@ -36,9 +37,10 @@ public class SettingsProvider implements InventoryProvider {
         ItemStack border = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         contents.fillBorders(ClickableItem.empty(border));
 
-        contents.set(1, 2, getChallengeItem());
-        contents.set(1, 4, getTimerItem());
-        contents.set(1, 6, getWorldOptions());
+        contents.set(1, 1, getChallengeItem());
+        contents.set(1, 3, getTimerItem());
+        contents.set(1, 5, getWorldOptions());
+        contents.set(1, 7, getOptionsItem());
     }
 
     public ClickableItem getChallengeItem() {
@@ -101,6 +103,27 @@ public class SettingsProvider implements InventoryProvider {
                 return;
 
             WorldOptionsInventory.INVENTORY.open((Player) entity);
+        });
+    }
+
+    public ClickableItem getOptionsItem() {
+        ItemStack item = new ItemStack(Material.COMPARATOR);
+        ItemMeta meta = item.getItemMeta();
+
+        String name = MessageManager.getMessage("settings.items.options.name");
+        String desc = MessageManager.getMessage("settings.items.options.description");
+
+        List<Component> lores = Collections.singletonList(Component.text(desc));
+
+        meta.lore(lores);
+        meta.displayName(Component.text(name));
+        item.setItemMeta(meta);
+        return ClickableItem.of(item, inv -> {
+            HumanEntity entity = inv.getWhoClicked();
+            if(!(entity instanceof Player))
+                return;
+
+            OptionsInventory.INVENTORY.open((Player) entity);
         });
     }
 

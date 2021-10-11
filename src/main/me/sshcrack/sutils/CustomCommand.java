@@ -2,6 +2,7 @@ package me.sshcrack.sutils;
 
 import me.sshcrack.sutils.commands.ParentCommand;
 import me.sshcrack.sutils.commands.SubCommand;
+import me.sshcrack.sutils.message.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -46,6 +47,12 @@ public class CustomCommand extends BukkitCommand {
 	public boolean execute(@NotNull CommandSender sender, @NotNull String label, String[] args) {
 		// running custom command manager
 		CommandResponse response;
+
+		if (!sender.hasPermission(subCommand.getNode()) && !subCommand.getNode().equals("")) {
+			MessageManager.sendMessage(sender, "noPerm");
+			return false;
+		}
+
 		if (subCommand instanceof ParentCommand) {
 			response = ((ParentCommand) subCommand).onCommand(sender, label, args, true);
 		} else {

@@ -51,9 +51,6 @@ public final class CentredMessage {
 
         String out = sb + message + sb;
 
-        if(message.contains("Resetting"))
-            System.out.println(String.format("halve  %s compensated %s to %s length %s sb length %s msg %s", halvedMessageSize, compensated, toCompensate, out.length(), sb.length(), out));
-
         if(toCompensate < compensated)
             out = StringFormatter.replaceLast(out, " ", "");
         int diff = toCompensate - (compensated - spaceLength);

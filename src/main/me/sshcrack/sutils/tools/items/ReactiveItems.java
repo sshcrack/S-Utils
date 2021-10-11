@@ -5,7 +5,9 @@ import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.TwoConsumer;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.chat.ItemTag;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +28,7 @@ public class ReactiveItems {
     public static ClickableItem getItem(ItemStack enabledItem, ItemStack disabledItem, String displayNameLoc, Supplier<Boolean> isEnabled, TwoConsumer<@Nullable InventoryClickEvent, Supplier<ClickableItem>> onUpdate) {
         String displayName = MessageManager.getMessage(displayNameLoc);
 
-        Function<@Nullable InventoryClickEvent, ClickableItem> updateItem = new Function<InventoryClickEvent, ClickableItem>() {
+        Function<@Nullable InventoryClickEvent, ClickableItem> updateItem = new Function<>() {
             @Override
             public ClickableItem apply(@Nullable InventoryClickEvent clickEvent) {
                 Supplier<ClickableItem> getClickable = () -> {
@@ -57,6 +59,9 @@ public class ReactiveItems {
         meta.lore(lores);
 
         stack.setItemMeta(meta);
+
+        stack.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+        stack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         return stack;
     }

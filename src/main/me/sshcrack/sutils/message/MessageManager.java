@@ -45,7 +45,7 @@ public class MessageManager {
 		messages = file;
 
 		String colored = ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("prefixFormat"));
-		prefix =ColorUtil.translateColors(colored);
+		prefix =ColorUtil.translate(colored);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class MessageManager {
 		try {
 			String msg = messages.getString(reference);
 			String colored = ChatColor.translateAlternateColorCodes('&', msg);
-			return ColorUtil.translateColors(colored);
+			return ColorUtil.translate(colored);
 		} catch (NullPointerException e) {
 			Bukkit.getLogger().warning("Could not find the message with the reference " + reference);
 			return "";
@@ -162,7 +162,7 @@ public class MessageManager {
 		try {
 			String msg = getMessage(reference);
 			String colored = ChatColor.translateAlternateColorCodes('&', msg);
-			return ColorUtil.translateColors(colored);
+			return ColorUtil.translate(colored);
 		} catch (NullPointerException e) {
 			Bukkit.getLogger().warning("Could not find the message with the reference " + reference);
 			return "";

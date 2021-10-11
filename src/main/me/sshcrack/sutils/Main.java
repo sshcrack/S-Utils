@@ -1,21 +1,21 @@
 package me.sshcrack.sutils;
 
 import fr.minuskube.inv.InventoryManager;
+import me.sshcrack.sutils.interactable.challenges.module.ChallengeList;
 import me.sshcrack.sutils.commands.ParentCommand;
 import me.sshcrack.sutils.commands.utils.*;
+import me.sshcrack.sutils.events.damage.DamageLogger;
 import me.sshcrack.sutils.events.timer.LeaveTimerListener;
 import me.sshcrack.sutils.events.timer.PauseTimerListener;
 import me.sshcrack.sutils.events.UtilListener;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
 import me.sshcrack.sutils.tools.world.WorldManager;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -47,11 +47,16 @@ public class Main extends JavaPlugin {
 
         setupListeners();
         setupCommands();
+
+        //Enable challenges
+        new ChallengeList();
+
         setupInv();
     }
 
     @Override
     public void onDisable() {
+        ChallengeList.disable();
         save();
     }
 
@@ -91,8 +96,8 @@ public class Main extends JavaPlugin {
         new CustomCommand("reset", new ResetCommand(), "template.manage", "Reset world",
                 getConfig().getStringList("command.reset"));
 
-        new CustomCommand("test", new TestCommand(), "template.standard", "test",
-                getConfig().getStringList("command.test"));
+        new CustomCommand("position", new PosCommand(), "template.standard", "Get, reset and remove positions",
+                getConfig().getStringList("command.position"));
     }
 
     public void setupListeners() {
@@ -101,6 +106,7 @@ public class Main extends JavaPlugin {
 
         new PauseTimerListener();
         new LeaveTimerListener();
+        new DamageLogger();
     }
     /**
      * This method is used to add any config values which are required post 3.0

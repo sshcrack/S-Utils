@@ -28,7 +28,7 @@ public class UtilListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
-        String name = e.getPlayer().displayName().insertion();
+        String name = e.getPlayer().getDisplayName();
         String quitMSG = MessageManager.getMessageF("events.leave", name);
 
         e.quitMessage(Component.text(quitMSG));
@@ -36,7 +36,7 @@ public class UtilListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        String name = e.getPlayer().displayName().insertion();
+        String name = e.getPlayer().getDisplayName();
         String joinMSG = MessageManager.getMessageF("events.join", name);
 
         e.joinMessage(Component.text(joinMSG));

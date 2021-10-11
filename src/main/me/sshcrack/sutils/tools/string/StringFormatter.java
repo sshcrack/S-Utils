@@ -118,7 +118,7 @@ public class StringFormatter {
             String replacement = beforeStr ? colorStr + beforeObj : afterObj + colorStr;
 
             output = output.replace(search, replacement);
-            output = ColorUtil.translateColors(output);
+            output = ColorUtil.translate(output);
         }
 
         return output;

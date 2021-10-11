@@ -9,8 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColorUtil {
-    public static String translateColors(String text) {
+    public static String translate(String text) {
         String translated = ChatColor.translateAlternateColorCodes('&', text);
+
         String withGradients = translateGradients(translated);
 
         Pattern pattern = Pattern.compile("<HEX#+.{6}>");

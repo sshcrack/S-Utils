@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 public class WorldOptionsInventory implements InventoryProvider {
     public static SmartInventory INVENTORY = SmartInventory.builder()
-            .id("world-util-options")
+            .id("world-util-world-options")
             .provider(new WorldOptionsInventory())
             .manager(Main.plugin.invManager)
             .size(3, 9)
@@ -48,7 +48,7 @@ public class WorldOptionsInventory implements InventoryProvider {
     private ClickableItem getSeedResetItem(InventoryContents contents) {
         ItemStack stack = new ItemStack(Material.WHEAT_SEEDS);
 
-        String displayName = "settings.options.seed_reset";
+        String displayName = "settings.world_options.seed_reset";
         Supplier<Boolean> isEnabled = WorldManager::isSeedReset;
         TwoConsumer<@Nullable InventoryClickEvent, Supplier<ClickableItem>> onChange = (inv, getClickable) -> {
             WorldManager.toggleSeedReset();
@@ -63,7 +63,7 @@ public class WorldOptionsInventory implements InventoryProvider {
         ItemStack enabledItem = Skulls.VILLAGER_ENABLED;
         ItemStack disabledItem = Skulls.VILLAGER_DISABLED;
 
-        String displayName = "settings.options.villager_spawn";
+        String displayName = "settings.world_options.villager_spawn";
         Supplier<Boolean> isEnabled = WorldManager::isVillagerSpawnEnabled;
         TwoConsumer<@Nullable InventoryClickEvent, Supplier<ClickableItem>> onChange = (inv, getClickable) -> {
             WorldManager.toggleVillagerSpawn();
@@ -79,7 +79,7 @@ public class WorldOptionsInventory implements InventoryProvider {
         ItemStack resetItem = Skulls.RESET_WORLD;
         ItemMeta meta = resetItem.getItemMeta();
 
-        String resetWorldText = MessageManager.getMessage("settings.options.reset_world");
+        String resetWorldText = MessageManager.getMessage("settings.world_options.reset_world");
         meta.displayName(Component.text(resetWorldText));
 
         resetItem.setItemMeta(meta);
