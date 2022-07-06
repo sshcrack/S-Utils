@@ -29,15 +29,10 @@ public class ChunkEffect extends Challenge {
 
     public ChunkEffect() {
         super(
-                new ItemStack(Material.POTION),
                 "chunk_effect",
-                false
+                new Properties()
+                        .item(new ItemStack(Material.POTION))
         );
-    }
-
-    @Override
-    public void onLoad() {
-        loadConfig();
     }
 
     @Override
@@ -46,11 +41,8 @@ public class ChunkEffect extends Challenge {
     }
 
     @Override
-    public void onSave() {
-        saveConfig();
-    }
-
     public void loadConfig() {
+        super.loadConfig();
         FileConfiguration config = Main.plugin.getConfig();
         HashMap<Long, PotionEffect> mapped = new HashMap<>();
 
@@ -78,7 +70,9 @@ public class ChunkEffect extends Challenge {
         this.saved = mapped;
     }
 
+    @Override
     public void saveConfig() {
+        super.saveConfig();
         List<String> list = new ArrayList<>();
         saved.forEach((k, v) -> {
             list.add(k + "=" + v.getType().getName() + "=" + v.getAmplifier());

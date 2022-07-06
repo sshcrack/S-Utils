@@ -17,7 +17,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.List;
@@ -37,7 +36,7 @@ public class Toggleable implements Interactable {
     private String disabledDesc;
 
     private boolean enabled = false;
-    private Supplier<Boolean> showTitles;
+    private final Supplier<Boolean> showTitles;
 
     private String enabledTitle;
     private String disabledTitle;
@@ -50,23 +49,26 @@ public class Toggleable implements Interactable {
 
 
     private final String id;
-    private final Properties properties;
+    private final GenericProperties<?> properties;
     //</editor-fold>
 
-    public Toggleable(String id, Properties properties) {
+    public Toggleable(String id, GenericProperties<?> properties) {
         this.id = id;
         this.properties = properties;
+        this.showTitles = properties.showTitles;
 
         loadMessages();
         loadConfig();
 
-        this.showTitles = properties.showTitles;
         this.item = Tools.firstDefault(properties.item, getDefaultItem());
 
         this.enabledTitle = Tools.firstDefault(properties.enableTitle, this.enabledTitle);
 
         this.enabledDesc = Tools.firstDefault(properties.enabled, this.enabledDesc);
         this.disabledDesc = Tools.firstDefault(properties.disabled, this.disabledDesc);
+
+        if(enabled)
+            enable();
     }
 
     //<editor-fold desc="Clickables">
@@ -96,15 +98,19 @@ public class Toggleable implements Interactable {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Enable / Disable">
     public void enable() {
+        enable(false);
+    }
+
+    //<editor-fold desc="Enable / Disable">
+    private void enable(boolean silent) {
         if (isEnabled())
             return;
 
         this.enabled = true;
         saveConfig();
 
-        if (showTitles.get())
+        if (showTitles.get() && !silent)
             showEnabledTitle();
 
         onEnable();
@@ -152,7 +158,7 @@ public class Toggleable implements Interactable {
 
         boolean enabledInConf = config.getBoolean(enabledLoc, false);
         if (enabledInConf)
-            enable();
+            enable(true);
     }
 
     public void saveConfig() {
@@ -231,6 +237,15 @@ public class Toggleable implements Interactable {
     public String getRoot() {
         return String.format("toggleable.%s", id);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public GenericProperties<?> getProperties() {
+        return properties;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Events">
@@ -244,76 +259,7 @@ public class Toggleable implements Interactable {
     //</editor-fold>
 
     //<editor-fold desc="Properties">
-    public static class Properties {
-        public boolean itemEnchanted = false;
-        public boolean clickToggle = false;
-        public boolean statusDescription = false;
-        public Supplier<Boolean> showTitles = () -> false;
-
-        public @Nullable String enableTitle = null;
-        public @Nullable String disableTitle = null;
-
-
-        public @Nullable String enabled = null;
-        public @Nullable String disabled = null;
-        public @Nullable ItemStack item;
-
-        public Properties showTitles() {
-            showTitles = () -> true;
-
-            return this;
-        }
-
-        public Properties showTitles(Supplier<Boolean> showTitle) {
-            this.showTitles = showTitle;
-
-            return this;
-        }
-
-        public Properties showTitles(String enable, String disable) {
-            enableTitle = enable;
-            disableTitle = disable;
-
-            return this;
-        }
-
-        public Properties showTitles(String enable, String disable, Supplier<Boolean> showTitle) {
-            showTitles(enable, disable);
-            this.showTitles = showTitle;
-
-            return this;
-        }
-
-        public Properties enchant() {
-            itemEnchanted = true;
-
-            return this;
-        }
-
-        public Properties clickToggle() {
-            this.clickToggle = true;
-
-            return this;
-        }
-
-        public Properties statusDescription() {
-            statusDescription = true;
-
-            return this;
-        }
-
-        public Properties status(String enabled, String disabled) {
-            this.enabled = enabled;
-            this.disabled = disabled;
-
-            return this;
-        }
-
-        public Properties item(ItemStack item) {
-            this.item = item;
-
-            return this;
-        }
-    }
+    public static class Properties extends GenericProperties<Toggleable.Properties> { }
     //</editor-fold>
 }
+

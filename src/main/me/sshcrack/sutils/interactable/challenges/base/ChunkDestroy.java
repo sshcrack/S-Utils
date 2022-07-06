@@ -31,9 +31,9 @@ public class ChunkDestroy extends Challenge {
 
     public ChunkDestroy() {
         super(
-                new ItemStack(Material.BEDROCK),
                 "chunk_destroy",
-                false
+                new Properties()
+                        .item(new ItemStack(Material.BEDROCK))
         );
     }
 

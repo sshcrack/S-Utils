@@ -25,7 +25,7 @@ public class HurtSpawn extends Challenge {
     private static final Random random = new Random();
 
     public HurtSpawn() {
-        super(skull, "hurt_spawn", false);
+        super("hurt_spawn", new Properties().item(skull));
     }
 
     @EventHandler(priority = EventPriority.HIGH)

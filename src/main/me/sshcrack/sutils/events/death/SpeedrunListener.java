@@ -1,9 +1,9 @@
 package me.sshcrack.sutils.events.death;
 
 import me.sshcrack.sutils.Main;
+import me.sshcrack.sutils.interactable.toggable.ToggleableListener;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.Tools;
-import me.sshcrack.sutils.interactable.toggable.ToggableListener;
 import me.sshcrack.sutils.tools.world.WorldManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -14,7 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class SpeedrunListener extends ToggableListener {
+public class SpeedrunListener extends ToggleableListener {
     public SpeedrunListener() {
         super("speedrun",
                 new Properties()

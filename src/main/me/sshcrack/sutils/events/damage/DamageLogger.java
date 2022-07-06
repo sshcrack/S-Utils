@@ -1,8 +1,9 @@
 package me.sshcrack.sutils.events.damage;
 
+import me.sshcrack.sutils.interactable.toggable.Toggleable;
+import me.sshcrack.sutils.interactable.toggable.ToggleableListener;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.Tools;
-import me.sshcrack.sutils.interactable.toggable.ToggableListener;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -12,15 +13,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class DamageLogger extends ToggableListener {
+public class DamageLogger extends ToggleableListener {
     public final static double noDetectDamage = 1000;
 
     public DamageLogger() {
         super("damage_logger", new Properties()
                 .item(new ItemStack(Material.NAME_TAG))
-                .enchant()
-                .statusDescription()
-                .clickToggle()
         );
     }
 

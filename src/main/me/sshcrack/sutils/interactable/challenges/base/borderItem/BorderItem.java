@@ -42,9 +42,9 @@ public class BorderItem extends Challenge {
 
     public BorderItem() {
         super(
-                new ItemStack(Material.BEACON),
                 "border_item",
-                false
+                new Properties()
+                        .item(new ItemStack(Material.BEACON))
         );
     }
 

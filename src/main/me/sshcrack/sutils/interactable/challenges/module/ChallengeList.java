@@ -26,7 +26,7 @@ public class ChallengeList {
         for (Challenge challenge : CHALLENGES) {
             if(challenge.isEnabled())
                 challenge.onDisable();
-            challenge.saveChallengeConfig();
+            challenge.saveConfig();
         }
     }
 }

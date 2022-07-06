@@ -32,9 +32,9 @@ public class DmgRedirect extends Challenge {
 
     public DmgRedirect() {
         super(
-                new ItemStack(Material.REDSTONE),
                 "damage_redirect",
-                false
+                new Properties()
+                        .item(new ItemStack(Material.REDSTONE))
         );
     }
 

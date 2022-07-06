@@ -7,16 +7,16 @@ import fr.minuskube.inv.content.InventoryProvider;
 import me.sshcrack.sutils.Main;
 import me.sshcrack.sutils.events.damage.DamageLogger;
 import me.sshcrack.sutils.events.death.SpeedrunListener;
+import me.sshcrack.sutils.interactable.toggable.ToggleableListener;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.items.Skulls;
-import me.sshcrack.sutils.interactable.toggable.ToggableListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class OptionsInventory implements InventoryProvider {
-    ToggableListener damageLogger = new DamageLogger();
-    ToggableListener listener = new SpeedrunListener();
+    ToggleableListener damageLogger = new DamageLogger();
+    ToggleableListener listener = new SpeedrunListener();
 
     public static SmartInventory INVENTORY = SmartInventory.builder()
             .id("world-util-options")
