@@ -5,7 +5,6 @@ import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.timer.TimerState;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
 import net.kyori.adventure.text.Component;
-import org.apache.logging.log4j.core.impl.JdkMapAdapterStringMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Creature;
@@ -48,14 +47,14 @@ public class PauseTimerListener implements Listener {
     }
 
     public void register() {
-        UtilTimer.onStateChange.add(state -> {
+        UtilTimer.instance.onStateChange.add(state -> {
             if (TimerState.RUNNING == state)
                 disable();
             else
                 enable();
         });
 
-        UtilTimer.onTimerUpdate.add((state, format) -> {
+        UtilTimer.instance.onTimerUpdate.add((state, format) -> {
             Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
             boolean paused = state == TimerState.PAUSED;
 

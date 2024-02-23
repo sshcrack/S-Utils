@@ -57,7 +57,11 @@ public class BorderItem extends Challenge {
         Main.plugin.getLogger().info(String.format("Border size is %s", border_size));
         border.setSize(border_size);
         border.setCenter(spawn);
+        Main.plugin.getLogger().info("Border set");
     }
+
+    @Override
+    public void onUnregister() {}
 
     public void loadBorderConfig() {
         long currSeed = world.getSeed();
@@ -82,13 +86,13 @@ public class BorderItem extends Challenge {
                         .stream()
                         .map(PotionStore::fromString)
                         .filter(Objects::nonNull)
-                        .collect(Collectors.toList())
+                        .toList()
         );
         materials.addAll(
                 rawMats
                         .stream()
                         .map(Material::valueOf)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 
@@ -99,10 +103,9 @@ public class BorderItem extends Challenge {
 
     @EventHandler()
     public void onItemCraft(CraftItemEvent e) {
-        if(!(e.getWhoClicked() instanceof Player))
+        if(!(e.getWhoClicked() instanceof Player player))
             return;
 
-        Player player = (Player) e.getWhoClicked();
         ItemStack item = e.getCurrentItem();
 
         if(item == null)
@@ -113,9 +116,8 @@ public class BorderItem extends Challenge {
 
     @EventHandler
     public void onItemPickUp(EntityPickupItemEvent e) {
-        if(!(e.getEntity() instanceof Player))
+        if(!(e.getEntity() instanceof Player player))
             return;
-        Player player = (Player) e.getEntity();
         ItemStack item = e.getItem().getItemStack();
 
         registerItem(player, item);
@@ -159,9 +161,9 @@ public class BorderItem extends Challenge {
         List<PotionStore> contains = potions
                 .stream()
                 .filter(e -> e.getPotion() == type && e.getMaterial() == mat)
-                .collect(Collectors.toList());
+                .toList();
 
-        return contains.size() > 0;
+        return !contains.isEmpty();
     }
 
 
@@ -185,7 +187,7 @@ public class BorderItem extends Challenge {
         Duration inOut = Duration.ofMillis(200);
         Duration stay = Duration.ofMillis(500);
 
-        Title.Times times = Title.Times.of(inOut, stay, inOut);
+        Title.Times times = Title.Times.times(inOut, stay, inOut);
         Title title = Title.title(Component.text(titleStr), Component.text(sub), times);
 
         audience.showTitle(title);

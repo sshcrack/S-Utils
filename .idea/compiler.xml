@@ -9,8 +9,5 @@
         <module name="S-Utils" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="S-Utils" target="9" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -32,4 +32,10 @@ public class UltraHardcore extends Challenge {
             e.setAmount(0);
         }
     }
+
+    @Override
+    public void onRegister() {}
+
+    @Override
+    public void onUnregister() {}
 }

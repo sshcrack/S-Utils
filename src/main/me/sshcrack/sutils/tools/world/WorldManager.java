@@ -1,14 +1,13 @@
 package me.sshcrack.sutils.tools.world;
 
-import com.google.common.util.concurrent.UncheckedTimeoutException;
 import me.sshcrack.sutils.Main;
+import me.sshcrack.sutils.interactable.challenges.module.Challenge;
+import me.sshcrack.sutils.interactable.challenges.module.ToggleableList;
 import me.sshcrack.sutils.message.MessageManager;
 import me.sshcrack.sutils.tools.Tools;
 import me.sshcrack.sutils.tools.location.PositionManager;
-import me.sshcrack.sutils.tools.string.StringFormatter;
 import me.sshcrack.sutils.tools.system.Directory;
 import me.sshcrack.sutils.tools.timer.UtilTimer;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
@@ -18,7 +17,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -154,6 +152,9 @@ public class WorldManager {
         }
         isResetting = true;
         UtilTimer.reset();
+        for (Challenge challenge : ToggleableList.instance.CHALLENGES) {
+            challenge.onReset();
+        }
 
         Runnable toRun = () -> {
             PositionManager.reset();

@@ -25,8 +25,7 @@ public class ChunkDestroy extends Challenge {
     HashMap<Player, Chunk> currChunks = new HashMap<>();
 
 
-    Main plugin = Main.plugin;
-    BukkitScheduler scheduler = Bukkit.getScheduler();
+    private final Main plugin;
     @Nullable BukkitTask task;
 
     public ChunkDestroy() {
@@ -34,7 +33,9 @@ public class ChunkDestroy extends Challenge {
                 "chunk_destroy",
                 new Properties()
                         .item(new ItemStack(Material.BEDROCK))
+                        .timerEnabled()
         );
+        this.plugin = Main.plugin;
     }
 
     @Override
@@ -42,7 +43,13 @@ public class ChunkDestroy extends Challenge {
         if (task != null && !task.isCancelled())
             task.cancel();
 
-        task = scheduler.runTaskTimer(plugin, this::onTick, 0L, DESTROY_INTERVAL);
+        if(plugin == null) {
+            Bukkit.getLogger().info("Plugin is null");
+            Bukkit.getLogger().info(Main.plugin.toString());
+            return;
+        }
+
+        task = Bukkit.getScheduler().runTaskTimer(plugin, this::onTick, 0L, DESTROY_INTERVAL);
     }
 
     @Override
@@ -70,6 +77,8 @@ public class ChunkDestroy extends Challenge {
     }
 
     public void onTick() {
+        if(this.plugin == null)
+                return;
         List<Chunk> chunks = new ArrayList<>(currChunks.values());
 
         for (int i = 0; i < chunks.size(); i++) {
@@ -81,7 +90,7 @@ public class ChunkDestroy extends Challenge {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
                     for (int z = 0; z < 16; z++) {
-                        for (int y = 150; y >= 0; y--) {
+                        for (int y = 150; y >= -67; y--) {
                             Block block = chunk.getBlock(finalX, y, z);
                             Material type = block.getType();
 

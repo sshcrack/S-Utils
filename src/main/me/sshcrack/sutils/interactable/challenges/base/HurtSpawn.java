@@ -23,20 +23,24 @@ public class HurtSpawn extends Challenge {
     private static final String itemBase = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGM5YjlkY2JhMmE3ODA5ZWQ3Y2E1MmU2MzU3M2Q4NmUzMWY4OTU2NTdkOTk2MTU1NWVkMTgzMDMzZmIxZmU5OSJ9fX0=";
     private static final ItemStack skull = SkullCreator.itemFromBase64(itemBase);
     private static final Random random = new Random();
+    public final static double noDetectDamage = 1000;
 
     public HurtSpawn() {
-        super("hurt_spawn", new Properties().item(skull));
+        super("hurt_spawn", new Properties().item(skull)
+                .timerEnabled());
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
-        if(!(entity instanceof Player) || e.getDamage() <= 0.25)
+        double damage = e.getFinalDamage();
+        if(!(entity instanceof Player player) || damage <= 0.25 || e.isCancelled() || damage == noDetectDamage)
             return;
 
-        Player player = (Player) entity;
         Location loc = player.getLocation();
         World world = loc.getWorld();
+
+        player.sendMessage(String.format("Damage: %s", damage));
 
         Location around = Tools.getAirAround(loc, 2, 5);
         if(around == null) {

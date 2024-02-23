@@ -9,6 +9,7 @@ public class GenericProperties<T extends GenericProperties<?>> {
     public boolean itemEnchanted = false;
     public boolean clickToggle = false;
     public boolean statusDescription = false;
+    public boolean dont_initialize = false;
     public Supplier<Boolean> showTitles = () -> false;
 
     public @Nullable String enableTitle = null;
@@ -73,6 +74,15 @@ public class GenericProperties<T extends GenericProperties<?>> {
     public T item(ItemStack item) {
         this.item = item;
 
+        return (T) this;
+    }
+
+
+    /**
+     * If true, use {@link initialize()} to load this toggleable
+     */
+    public T dontInitialize() {
+        dont_initialize = true;
         return (T) this;
     }
 }

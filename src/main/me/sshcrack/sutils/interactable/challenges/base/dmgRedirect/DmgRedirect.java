@@ -3,6 +3,7 @@ package me.sshcrack.sutils.interactable.challenges.base.dmgRedirect;
 import me.sshcrack.sutils.interactable.challenges.module.Challenge;
 import me.sshcrack.sutils.events.damage.DamageLogger;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,13 +37,6 @@ public class DmgRedirect extends Challenge {
                 new Properties()
                         .item(new ItemStack(Material.REDSTONE))
         );
-    }
-
-    @Override
-    public void registerEvents() {
-        super.registerEvents();
-
-        rollPlayers();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -174,6 +168,7 @@ public class DmgRedirect extends Challenge {
         if (players.size() == 1) {
             this.mappings.clear();
             this.disable();
+            Bukkit.getServer().broadcast(Component.text("Cannot have odd number of players").color(NamedTextColor.RED));
             return;
         }
 

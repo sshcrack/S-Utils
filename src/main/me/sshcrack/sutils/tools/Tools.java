@@ -104,4 +104,31 @@ public class Tools {
     public static Audience getPlayers() {
         return Audience.audience(Bukkit.getOnlinePlayers());
     }
+
+    public static String bytesToHex(byte [] bytes) {
+
+        char [] result = new char [bytes.length * 2];
+
+        for(int index = 0; index < bytes.length; index++) {
+            int v = bytes[index];
+
+            int upper = (v >>> 4) & 0xF;
+            result[index * 2] = (char)(upper + (upper < 10 ? 48 : 65 - 10));
+
+            int lower = v & 0xF;
+            result[index * 2 + 1] = (char)(lower + (lower < 10 ? 48 : 65 - 10));
+        }
+
+        return new String(result);
+    }
+
+    public static byte[] hexToBytes(final String s) {
+        byte[] arr = new byte[s.length()/2];
+        for ( int start = 0; start < s.length(); start += 2 )
+        {
+            String thisByte = s.substring(start, start+2);
+            arr[start/2] = Byte.parseByte(thisByte, 16);
+        }
+        return arr;
+    }
 }

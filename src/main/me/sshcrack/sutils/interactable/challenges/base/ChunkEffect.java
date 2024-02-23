@@ -2,6 +2,7 @@ package me.sshcrack.sutils.interactable.challenges.base;
 
 import me.sshcrack.sutils.Main;
 import me.sshcrack.sutils.interactable.challenges.module.Challenge;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.nio.Buffer;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -32,7 +34,10 @@ public class ChunkEffect extends Challenge {
                 "chunk_effect",
                 new Properties()
                         .item(new ItemStack(Material.POTION))
+                        .timerEnabled()
         );
+        Bukkit.getLogger().info("Chunk effect constructor");
+        Bukkit.getLogger().info(saved.toString());
     }
 
     @Override
@@ -79,6 +84,12 @@ public class ChunkEffect extends Challenge {
         });
 
         Main.plugin.getConfig().set("chunk_effect", list);
+    }
+
+    @Override
+    public void onReset() {
+        super.onReset();
+        Main.plugin.getConfig().set("chunk_effect", new ArrayList<>());
     }
 
     @EventHandler

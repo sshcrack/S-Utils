@@ -4,6 +4,7 @@ utils:
   reload: '&2Config reloaded!'
   reset: '&4&lResetting world...'
   settings: '&3Settings opened!'
+  backpack: "&6Backpack opened!"
   position:
     name_needed: "&cYou have to give a name to delete"
     reset: "&4&lPositons have been reset."
@@ -58,6 +59,32 @@ challenges:
       - "&8Example:"
       - "&8Player A is falling of a cliff,"
       - "&8but Player B would get the damage"
+  half_heart:
+    name: 'Half a Heart'
+    description:
+      - "&cYou've just got half a heart to survive!"
+  hurt_potion:
+    name: 'Hurt Potion'
+    effect: "&3%s&7: &4&l%s&r &aeffect given.."
+    description:
+      - "&cYou get damaged, you get a potion"
+  random_recipes:
+    name: 'Random Recipes'
+    description:
+      - "&cRandomizes all recipes AAH"
+  tnt_run:
+    name: 'TNT Run'
+    description:
+      - "&cPlaces tnt under you, which explodes in near future"
+  inter_circle:
+    name: 'Inter Circle'
+    description:
+      - "&cYou have to stay in the circle. Easy right?"
+  force_item:
+    name: 'Force Item'
+    start_timer: "&ePlease start timer."
+    description:
+      - "&cYou have to obtain a given item within 15 minutes time."
 
 settings:
   titles:
@@ -159,8 +186,8 @@ toggleable:
     name: "&6Speedrun"
     description: "&4&lResets&r &6 the world if a player dies"
     died:
-      title: "&4Player died died"
-      description: "&cResetting world..."
+      title: "&4Player died"
+      subtitle: "&cResetting world..."
 
 causes:
   format: "&7Player&9 %s took damage because of &6&l %s&9&l and lost %s&r &7HP."

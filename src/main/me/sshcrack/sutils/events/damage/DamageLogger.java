@@ -19,6 +19,9 @@ public class DamageLogger extends ToggleableListener {
     public DamageLogger() {
         super("damage_logger", new Properties()
                 .item(new ItemStack(Material.NAME_TAG))
+                .alwaysEnabled()
+                .statusDescription()
+                .clickToggle()
         );
     }
 

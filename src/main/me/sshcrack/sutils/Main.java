@@ -1,10 +1,9 @@
 package me.sshcrack.sutils;
 
 import fr.minuskube.inv.InventoryManager;
-import me.sshcrack.sutils.interactable.challenges.module.ChallengeList;
+import me.sshcrack.sutils.interactable.challenges.module.ToggleableList;
 import me.sshcrack.sutils.commands.ParentCommand;
 import me.sshcrack.sutils.commands.utils.*;
-import me.sshcrack.sutils.events.damage.DamageLogger;
 import me.sshcrack.sutils.events.timer.LeaveTimerListener;
 import me.sshcrack.sutils.events.timer.PauseTimerListener;
 import me.sshcrack.sutils.events.UtilListener;
@@ -28,8 +27,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        saveDefaultConfig();
         plugin = this;
+        saveDefaultConfig();
 
         MessageManager.lang = getConfig().getString("language");
         assert MessageManager.lang != null;
@@ -43,20 +42,23 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        plugin = this;
+        Main.plugin.getLogger().info("Enable");
         WorldManager.enable();
 
         setupListeners();
         setupCommands();
 
-        //Enable challenges
-        new ChallengeList();
-
         setupInv();
+
+        //Enable challenges
+        new ToggleableList();
     }
 
     @Override
     public void onDisable() {
-        ChallengeList.disable();
+        Main.plugin.getLogger().info("Disabeling");
+        ToggleableList.instance.disable();
         save();
     }
 
@@ -68,10 +70,9 @@ public class Main extends JavaPlugin {
 
     public void save() {
         UtilTimer.disable();
+        UtilTimer.save();
         WorldManager.save();
 
-        FileConfiguration config  = this.getConfig();
-        config.set(UtilTimer.currLoc, UtilTimer.getMillis());
         this.saveConfig();
     }
 
@@ -93,6 +94,8 @@ public class Main extends JavaPlugin {
                 getConfig().getStringList("command.settings"));
         new CustomCommand("timer", new TimerCommand(), "template.standard", "Manage the timer",
                 getConfig().getStringList("command.timer"));
+        new CustomCommand("bp", new BackpackCommand(), "template.standard", "Opens the backpack",
+                getConfig().getStringList("command.bp"));
         new CustomCommand("reset", new ResetCommand(), "template.manage", "Reset world",
                 getConfig().getStringList("command.reset"));
 
@@ -106,7 +109,6 @@ public class Main extends JavaPlugin {
 
         new PauseTimerListener();
         new LeaveTimerListener();
-        new DamageLogger();
     }
     /**
      * This method is used to add any config values which are required post 3.0

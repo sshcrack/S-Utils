@@ -10,6 +10,7 @@ import me.sshcrack.sutils.tools.string.colors.ColorUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -41,24 +42,38 @@ public class Toggleable implements Interactable {
     private String enabledTitle;
     private String disabledTitle;
 
-    private final Title.Times times = Title.Times.of(
+    private final Title.Times times = Title.Times.times(
             Duration.ofMillis(500),
             Duration.ofMillis(2000),
             Duration.ofMillis(500)
     );
 
 
+
     private final String id;
     private final GenericProperties<?> properties;
     //</editor-fold>
+
+    private boolean initialized = false;
+    public void initialize() {
+        if(initialized)
+            return;
+
+        System.out.println("Initializing...");
+        initialized = true;
+        loadMessages();
+        System.out.println("Loading conf...");
+        loadConfig();
+        System.out.println("Done.");
+    }
 
     public Toggleable(String id, GenericProperties<?> properties) {
         this.id = id;
         this.properties = properties;
         this.showTitles = properties.showTitles;
 
-        loadMessages();
-        loadConfig();
+        if(!properties.dont_initialize)
+            initialize();
 
         this.item = Tools.firstDefault(properties.item, getDefaultItem());
 
@@ -66,10 +81,10 @@ public class Toggleable implements Interactable {
 
         this.enabledDesc = Tools.firstDefault(properties.enabled, this.enabledDesc);
         this.disabledDesc = Tools.firstDefault(properties.disabled, this.disabledDesc);
-
-        if(enabled)
-            enable();
     }
+
+    // Triggered on world reset
+    public void onReset() {}
 
     //<editor-fold desc="Clickables">
     public void addClickable(InventoryContents contents, int row, int column) {
@@ -104,15 +119,21 @@ public class Toggleable implements Interactable {
 
     //<editor-fold desc="Enable / Disable">
     private void enable(boolean silent) {
+        enable(silent, true);
+    }
+    private void enable(boolean silent, boolean shouldSave) {
+        Main.plugin.getLogger().info(String.format("Enabling enabled: %s", isEnabled()));
         if (isEnabled())
             return;
 
         this.enabled = true;
-        saveConfig();
+        if(shouldSave)
+            saveConfig();
 
         if (showTitles.get() && !silent)
             showEnabledTitle();
 
+        Bukkit.getLogger().info("OnEnable");
         onEnable();
     }
 
@@ -157,8 +178,9 @@ public class Toggleable implements Interactable {
         String enabledLoc = String.format("%s.enabled", getRoot());
 
         boolean enabledInConf = config.getBoolean(enabledLoc, false);
+        Bukkit.getLogger().info(String.format("Root: %s, enabled: %s", enabledLoc, enabledInConf));
         if (enabledInConf)
-            enable(true);
+            enable(true, false);
     }
 
     public void saveConfig() {

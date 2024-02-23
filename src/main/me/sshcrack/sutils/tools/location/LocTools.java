@@ -53,4 +53,18 @@ public class LocTools {
 
         return String.format("%,.2f,%,.2f,%,.2f,%f,%f@%s", x, y, z, yaw, pitch, loc.getWorld().getName());
     }
+
+    public static Location worldToNether(Location loc) {
+        World nether = Bukkit.getWorld("world_nether");
+
+        Location l = loc.clone().multiply(1f / 8f);
+        return new Location(nether, l.getX(), loc.getY(), l.getZ());
+    }
+
+    public static Location netherToWorld(Location loc) {
+        World overworld = Bukkit.getWorld("world");
+
+        Location l = loc.clone().multiply(8);
+        return new Location(overworld, l.getX(), loc.getY(), l.getZ());
+    }
 }
